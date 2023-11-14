@@ -24,34 +24,31 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onResume() {
         val appContext = requireContext().applicationContext
-        var prefs = appContext.applicationContext.getSharedPreferences(
+        val prefs = appContext.applicationContext.getSharedPreferences(
             appContext.packageName + "_preferences",
             Context.MODE_PRIVATE)
 
-        var cardNumber = prefs.getString("card_number", "0")
-        var cardID = cardNumber?.toLong(radix = 16) ?: 0
-        var digitsOnlyArea = prefs.getBoolean("digits_only_area", false)
-        var extraSymbols = prefs.getBoolean("extra_symbols", false)
+        val cardNumber = prefs.getString("card_number", "0")
+        val cardID = cardNumber?.toLong(radix = 16) ?: 0
+        val digitsOnlyArea = prefs.getBoolean("digits_only_area", false)
+        val extraSymbols = prefs.getBoolean("extra_symbols", false)
 
         var passwordCard = PasswordCard(cardID, digitsOnlyArea, extraSymbols)
-        var grid = passwordCard.getGrid()
-        var strings = grid.map{String(it)}
-        var lines = strings.mapIndexed{idx, value -> "$idx $value"}
+        val grid = passwordCard.getGrid()
+        val strings = grid.map{String(it)}
+        val lines = strings.mapIndexed{idx, value -> "${if (idx == 0) ' ' else idx} $value"}
 
         binding.apply{
             textviewFirst.text = lines.joinToString(separator = "\n")
         }
 
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onResume()
     }
 
     override fun onDestroyView() {
