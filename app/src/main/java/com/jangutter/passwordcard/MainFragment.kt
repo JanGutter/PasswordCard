@@ -55,7 +55,15 @@ class MainFragment : Fragment() {
                 }
                 body {
                     font-family: freefont_mono;
-                    font-size: 125%;
+                    font-size: 150%;
+                }
+                @media (prefers-color-scheme: dark) {
+                    body {
+                        background-color: #1e1e1e;
+                    }
+                    table {
+                        background-color: #ffffff;
+                    }
                 }
                 </style>
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0" />
