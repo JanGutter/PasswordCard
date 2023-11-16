@@ -2,6 +2,8 @@ package com.jangutter.passwordcard
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannedString
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +43,9 @@ class MainFragment : Fragment() {
 
         var passwordCard = PasswordCard(cardID, digitsOnlyArea, extraSymbols)
         val grid = passwordCard.getGrid()
-        val strings = grid.map{String(it)}
+        val strings = grid.map{
+            Html.toHtml(SpannedString(String(it)), Html.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL)
+        }
         val body =
             """
                 <!DOCTYPE html>
@@ -56,6 +60,7 @@ class MainFragment : Fragment() {
                 body {
                     font-family: freefont_mono;
                     font-size: 150%;
+                    letter-spacing: 0.2em;
                 }
                 @media (prefers-color-scheme: dark) {
                     body {
