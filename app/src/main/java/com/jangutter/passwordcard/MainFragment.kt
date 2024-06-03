@@ -37,7 +37,7 @@ class MainFragment : Fragment() {
             Context.MODE_PRIVATE)
 
         val cardNumber = prefs.getString("card_number", "0")
-        val cardID = cardNumber?.toLong(radix = 16) ?: 0
+        val cardID = cardNumber?.toLongOrNull(radix = 16) ?: 0
         val digitsOnlyArea = prefs.getBoolean("digits_only_area", false)
         val extraSymbols = prefs.getBoolean("extra_symbols", false)
 
